@@ -25,6 +25,12 @@ class SignUp extends Component {
         password,
         username
       });
+    } else {
+      alert("Passwords don't match!");
+      this.setState({
+        password: "",
+        username: ""
+      });
     }
   };
 
@@ -73,7 +79,7 @@ class SignUp extends Component {
           <div className="form-group">
             <label htmlFor="exampleInputPassword1">Confirm Password</label>
             <input
-              type="repassword"
+              type="password"
               className="form-control"
               id="repassword"
               placeholder="Confirm Password"

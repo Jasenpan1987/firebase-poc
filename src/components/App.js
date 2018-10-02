@@ -8,6 +8,8 @@ import { Home } from "./home";
 import { Account } from "./account";
 import { SignIn } from "./signIn";
 import { SignUp } from "./signUp";
+import { ChangePassword } from "./changePassword";
+import { ResetPassword } from "./resetPassword";
 
 class App extends Component {
   state = {
@@ -34,17 +36,17 @@ class App extends Component {
     auth.signOut();
   };
 
-  // handleResetPassword = email => {
-  //   auth.sendPasswordResetEmail(email);
-  // };
+  handleResetPassword = email => {
+    auth.sendPasswordResetEmail(email);
+  };
 
-  // handlePasswordUpdate = password => {
-  //   auth.currentUser.updatePassword(password);
-  // };
+  handleChangePassword = password => {
+    console.log("changePassword:: ", password);
+    auth.currentUser.updatePassword(password);
+  };
 
   authListener = () => {
     auth.onAuthStateChanged(user => {
-      console.log("user:: ", user);
       if (user) {
         this.setState({ user });
       } else {
@@ -89,6 +91,34 @@ class App extends Component {
                   <Redirect to="/" />
                 ) : (
                   <SignUp {...props} handleSignUp={this.handleSignUp} />
+                );
+              }}
+            />
+
+            <Route
+              path="/changepassword"
+              render={props => {
+                return this.state.user ? (
+                  <ChangePassword
+                    {...props}
+                    handleChangePassword={this.handleChangePassword}
+                  />
+                ) : (
+                  <Redirect to="/signin" />
+                );
+              }}
+            />
+
+            <Route
+              path="/resetpassword"
+              render={props => {
+                return this.state.user ? (
+                  <ResetPassword
+                    {...props}
+                    handleResetPassword={this.handleResetPassword}
+                  />
+                ) : (
+                  <Redirect to="/signin" />
                 );
               }}
             />
